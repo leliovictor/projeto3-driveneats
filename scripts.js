@@ -2,54 +2,82 @@ let meal;
 let drink;
 let dessert;
 
-let teste;
-//parentElement
+function selectOrder(element) {
 
-function selectMeal(mealOrder) {
-  mealOrder.classList.toggle("selected");
-  mealOrder.querySelector(".checkmark").classList.toggle("enabled");
+  selectItem(element);
 
-  if (meal !== undefined && meal !== mealOrder) {
+  removeAlreadySelected(element);
+
+  register();
+
+  checkOrders();
+}
+
+function selectItem(element) {
+  element.classList.toggle("selected");
+  element.querySelector(".checkmark").classList.toggle("enabled");
+}
+
+function removeAlreadySelected(element) {
+  let category = element.parentElement.className;
+  if (category == "meals") {
+    removeMealAlreadySelected();
+  }
+
+  if (category == "drinks") {
+    removeDrinkAlreadySelected();
+  }
+
+  if (category == "desserts") {
+      removeDessertAlreadySelected();
+  }
+}
+
+function removeMealAlreadySelected(element) {
+  if (meal !== undefined && meal !== element) {
     meal.querySelector(".checkmark").classList.remove("enabled");
     meal.classList.remove("selected");
   }
-
-  meal = document.querySelector(".meals .selected");
-
-  if (meal === null) {
-    meal = undefined;
-  }
 }
 
-function selectDrink(drinkOrder) {
-  drinkOrder.classList.toggle("selected");
-  drinkOrder.querySelector(".checkmark").classList.toggle("enabled");
-
-  if (drink !== undefined && drink !== drinkOrder) {
+function removeDrinkAlreadySelected(element) {
+  if (drink !== undefined && drink !== element) {
     drink.querySelector(".checkmark").classList.remove("enabled");
     drink.classList.remove("selected");
   }
-
-  drink = document.querySelector(".drinks .selected");
-
-  if (drink === null) {
-    drink = undefined;
-  }
 }
 
-function selectDessert(dessertOrder) {
-  dessertOrder.classList.toggle("selected");
-  dessertOrder.querySelector(".checkmark").classList.toggle("enabled");
-
-  if (dessert !== undefined && dessert !== dessertOrder) {
+function removeDessertAlreadySelected(element) {
+  if (dessert !== undefined && dessert !== element) {
     dessert.querySelector(".checkmark").classList.remove("enabled");
     dessert.classList.remove("selected");
   }
+}
 
+function register() {
+  meal = document.querySelector(".meals .selected");
+  drink = document.querySelector(".drinks .selected");
   dessert = document.querySelector(".desserts .selected");
 
+  checkNull();
+}
+
+function checkNull() {
+  if (meal === null) {
+    meal = undefined;
+  }
+  if (drink === null) {
+    drink = undefined;
+  }
   if (dessert === null) {
     dessert = undefined;
   }
 }
 
+function checkOrders() {
+  if (meal !== undefined && drink !== undefined && dessert !== undefined) {
+    document.querySelector(".finish-order").classList.add("enabled");
+  } else {
+    document.querySelector(".finish-order").classList.remove("enabled");
+  }
+}
