@@ -130,6 +130,11 @@ function transformStringToNumber(string) {
     return value
 }
 
+function sendOrder() {
+    let name = prompt("Digite seu nome");
+    let adress = prompt("Informe seu endereço");
+}
+
 
 function cancel() {
   document.querySelector(".span").classList.add("disabled");
