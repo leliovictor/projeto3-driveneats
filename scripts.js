@@ -81,3 +81,11 @@ function checkOrders() {
     document.querySelector(".finish-order").classList.remove("enabled");
   }
 }
+
+function closeOrder() {
+    document.querySelector(".span").classList.remove("disabled");
+}
+
+function cancel() {
+    document.querySelector(".span").classList.add("disabled");
+}
