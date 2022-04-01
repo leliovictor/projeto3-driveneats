@@ -1,6 +1,10 @@
 let meal;
+let mealName;
 let drink;
+let drinkName;
 let dessert;
+let dessertName;
+let finalPrice;
 
 function selectOrder(element) {
   selectItem(element);
@@ -92,18 +96,21 @@ function closeOrder() {
 function ordersConfirmation() {
   let confirmationMealName = document.querySelector(".confirmation_meal h2");
   confirmationMealName.innerHTML = meal.children[1].textContent;
+  mealName = meal.children[1].textContent;
 
   let confirmationMealValue = document.querySelector(".confirmation_meal h3");
   confirmationMealValue.innerHTML = meal.children[3].textContent.slice(3,8);
 
   let confirmationDrinkName = document.querySelector(".confirmation_drink h2");
   confirmationDrinkName.innerHTML = drink.children[1].textContent;
+  drinkName = drink.children[1].textContent;
 
   let confirmationDrinkValue = document.querySelector(".confirmation_drink h3");
   confirmationDrinkValue.innerHTML = drink.children[3].textContent.slice(3,8);
 
   let confirmationDessertName = document.querySelector(".confirmation_dessert h2");
   confirmationDessertName.innerHTML = dessert.children[1].textContent;
+  dessertName = dessert.children[1].textContent;
 
   let confirmationDessertValue = document.querySelector(".confirmation_dessert h3");
   confirmationDessertValue.innerHTML = dessert.children[3].textContent.slice(3,8);
@@ -112,7 +119,8 @@ function ordersConfirmation() {
 
 function totalConfirmation() {
     let confirmationTotalValue = document.querySelector(".confirmation_total h3");
-    confirmationTotalValue.innerHTML = `R$ ${totalSum()}`;
+    confirmationTotalValue.innerHTML = `R$ ${totalSum().toFixed(2)}`;
+    finalPrice = `R$ ${totalSum().toFixed(2)}`;
 }
 
 function totalSum() {
@@ -126,13 +134,25 @@ function transformStringToNumber(string) {
     let real = string.slice(3,5)
     let cent = string.slice(6,8)
     let value = parseFloat(`${real}.${cent}`)
-    console.log(value);
     return value
 }
 
 function sendOrder() {
     let name = prompt("Digite seu nome");
     let adress = prompt("Informe seu endereço");
+
+    let message = `Olá, gostaria de fazer o pedido:
+    - Prato: ${mealName}
+    - Bebida: ${drinkName} 
+    - Sobremesa: ${dessertName} 
+    Total: ${finalPrice} 
+    
+    Nome: ${name} 
+    Endereço: ${adress}`;
+    
+    let encoded = encodeURIComponent(message);
+
+    window.open(`https://wa.me/5521973651490?text=${encoded}`);
 }
 
 
