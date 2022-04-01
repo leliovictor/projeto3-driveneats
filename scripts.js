@@ -3,7 +3,6 @@ let drink;
 let dessert;
 
 function selectOrder(element) {
-
   selectItem(element);
 
   removeAlreadySelected(element);
@@ -29,7 +28,7 @@ function removeAlreadySelected(element) {
   }
 
   if (category == "desserts") {
-      removeDessertAlreadySelected();
+    removeDessertAlreadySelected();
   }
 }
 
@@ -83,9 +82,55 @@ function checkOrders() {
 }
 
 function closeOrder() {
-    document.querySelector(".span").classList.remove("disabled");
+  ordersConfirmation();
+
+  totalConfirmation();
+
+  document.querySelector(".span").classList.remove("disabled");
 }
 
+function ordersConfirmation() {
+  let confirmationMealName = document.querySelector(".confirmation_meal h2");
+  confirmationMealName.innerHTML = meal.children[1].textContent;
+
+  let confirmationMealValue = document.querySelector(".confirmation_meal h3");
+  confirmationMealValue.innerHTML = meal.children[3].textContent.slice(3,8);
+
+  let confirmationDrinkName = document.querySelector(".confirmation_drink h2");
+  confirmationDrinkName.innerHTML = drink.children[1].textContent;
+
+  let confirmationDrinkValue = document.querySelector(".confirmation_drink h3");
+  confirmationDrinkValue.innerHTML = drink.children[3].textContent.slice(3,8);
+
+  let confirmationDessertName = document.querySelector(".confirmation_dessert h2");
+  confirmationDessertName.innerHTML = dessert.children[1].textContent;
+
+  let confirmationDessertValue = document.querySelector(".confirmation_dessert h3");
+  confirmationDessertValue.innerHTML = dessert.children[3].textContent.slice(3,8);
+
+}
+
+function totalConfirmation() {
+    let confirmationTotalValue = document.querySelector(".confirmation_total h3");
+    confirmationTotalValue.innerHTML = `R$ ${totalSum()}`;
+}
+
+function totalSum() {
+    let mealValue = transformStringToNumber(meal.children[3].textContent);
+    let drinkValue = transformStringToNumber(drink.children[3].textContent);
+    let dessertValue = transformStringToNumber(dessert.children[3].textContent);
+    return mealValue+drinkValue+dessertValue;
+}
+
+function transformStringToNumber(string) {
+    let real = string.slice(3,5)
+    let cent = string.slice(6,8)
+    let value = parseFloat(`${real}.${cent}`)
+    console.log(value);
+    return value
+}
+
+
 function cancel() {
-    document.querySelector(".span").classList.add("disabled");
+  document.querySelector(".span").classList.add("disabled");
 }
